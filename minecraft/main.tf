@@ -118,3 +118,38 @@ resource "azurerm_linux_function_app" "function" {
 
   site_config {}
 }
+
+resource "azurerm_automation_account" "automation_account" {
+  name                = "automation-account-fish"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  sku_name = "Basic"
+}
+
+resource "azurerm_automation_runbook" "runbook" {
+  name                    = "paisa_bachau_runbook"
+  resource_group_name     = azurerm_resource_group.rg.name
+  location                = azurerm_resource_group.rg.location
+  automation_account_name = azurerm_automation_account.automation_account.name
+  log_verbose             = true
+  log_progress            = true
+  description             = "Paisa Bachau Abhiyan For Fishcraft Server"
+  runbook_type            = "PowerShellWorkflow"
+
+  # publish_content_link {
+  #   uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/c4935ffb69246a6058eb24f54640f53f69d3ac9f/101-automation-runbook-getvms/Runbooks/Get-AzureVMTutorial.ps1"
+  # }
+  content = file("./scripts/paisa_bachau_runbook.ps1")
+}
+
+resource "azurerm_automation_webhook" "paisa_bachau" {
+  name                    = "paisa-bachau-fish"
+  resource_group_name     = azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.automation_account.name
+  expiry_time             = "2023-06-23T00:00:00Z"
+  enabled                 = true
+  runbook_name            = azurerm_automation_runbook.runbook.name
+  parameters = {
+  }
+}
