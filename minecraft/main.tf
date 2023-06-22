@@ -137,8 +137,8 @@ resource "azurerm_automation_credential" "fish_creds" {
   name                    = "fishcraft-credentials"
   resource_group_name     = azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.automation_account.name
-  username                = "chux"
-  password                = random_password.chux_password.result
+  username                = var.paisa_bachau_username
+  password                = var.paisa_bachau_password
 }
 
 # https://778eeeda-1677-43be-8fcb-21d7ca799fd5.webhook.cid.azure-automation.net/webhooks?token=GiE5MYWYnonmY1VV0ythXEIScIAxWPoW1J3in5Sr45M%3d
