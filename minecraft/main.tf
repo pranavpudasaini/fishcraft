@@ -91,34 +91,6 @@ resource "azurerm_virtual_machine" "minecraft_server" {
   }
 }
 
-resource "azurerm_storage_account" "main" {
-  name                     = "fishstorage${random_string.random_prefix.result}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_replication_type = "LRS"
-  account_tier             = "Standard"
-}
-
-resource "azurerm_service_plan" "plan" {
-  name                = "service-plan"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  os_type             = "Linux"
-  sku_name            = "Y1"
-}
-
-resource "azurerm_linux_function_app" "function" {
-  name                = "on-demand-fish-function"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-
-  storage_account_name       = azurerm_storage_account.main.name
-  storage_account_access_key = azurerm_storage_account.main.primary_access_key
-  service_plan_id            = azurerm_service_plan.plan.id
-
-  site_config {}
-}
-
 resource "azurerm_automation_account" "automation_account" {
   name                = "automation-account-fish"
   resource_group_name = azurerm_resource_group.rg.name
