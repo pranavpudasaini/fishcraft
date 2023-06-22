@@ -1,4 +1,4 @@
-Workflow Stop-Start-AzureVM 
+Workflow Start-Stop-AzureVM 
 { 
   Param 
   (    
@@ -14,7 +14,7 @@ Workflow Stop-Start-AzureVM
 
   $AzureSubscriptionId = "b5e90f4f-4cf3-4858-8adc-4e9cb7e4fb51"
   $AzureVMList = "minecraft-vm"
-  $Action = "Stop"
+  $Action = "Start"
 
   Write-Output $AzureSubscriptionId
   Write-Output $AzureVMList
@@ -59,3 +59,4 @@ Workflow Stop-Start-AzureVM
     } 
   } 
 }
+

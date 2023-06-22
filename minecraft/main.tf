@@ -105,36 +105,65 @@ resource "azurerm_automation_account" "automation_account" {
   sku_name = "Basic"
 }
 
+# TODO: remove this lazy fix
+# Runbook to Stop
 resource "azurerm_automation_runbook" "runbook" {
-  name                    = "paisa_bachau_runbook"
+  name                    = "stop-start-azurevm"
   resource_group_name     = azurerm_resource_group.rg.name
   location                = azurerm_resource_group.rg.location
   automation_account_name = azurerm_automation_account.automation_account.name
   log_verbose             = true
   log_progress            = true
-  description             = "Paisa Bachau Abhiyan For Fishcraft Server"
+  description             = "paisa bachau abhiyan for fishcraft server"
   runbook_type            = "PowerShellWorkflow"
 
   # publish_content_link {
-  #   uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/c4935ffb69246a6058eb24f54640f53f69d3ac9f/101-automation-runbook-getvms/Runbooks/Get-AzureVMTutorial.ps1"
+  #   uri = "https://raw.githubusercontent.com/azure/azure-quickstart-templates/c4935ffb69246a6058eb24f54640f53f69d3ac9f/101-automation-runbook-getvms/runbooks/get-azurevmtutorial.ps1"
   # }
   content = file("./scripts/paisa_bachau_runbook.ps1")
 }
 
+# Runbook to Start
+resource "azurerm_automation_runbook" "kunbook" {
+  name                    = "start-stop-azurevm"
+  resource_group_name     = azurerm_resource_group.rg.name
+  location                = azurerm_resource_group.rg.location
+  automation_account_name = azurerm_automation_account.automation_account.name
+  log_verbose             = true
+  log_progress            = true
+  description             = "kahile kai ta khelera ni lyaunu paryo ni sir 🏃🎮"
+  runbook_type            = "PowerShellWorkflow"
+
+  # publish_content_link {
+  #   uri = "https://raw.githubusercontent.com/azure/azure-quickstart-templates/c4935ffb69246a6058eb24f54640f53f69d3ac9f/101-automation-runbook-getvms/runbooks/get-azurevmtutorial.ps1"
+  # }
+  content = file("./scripts/on_hanera_lyau_gyaam.ps1")
+}
+
+# Webhook for Starting
 resource "azurerm_automation_webhook" "paisa_bachau" {
-  name                    = "paisa-bachau-fish"
+  name                    = "paisa_bachau_webhook"
   resource_group_name     = azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.automation_account.name
   expiry_time             = "2023-06-23T00:00:00Z"
   enabled                 = true
   runbook_name            = azurerm_automation_runbook.runbook.name
-  parameters = {
-    input = "parameter"
-  }
+  parameters              = {}
+}
+
+# Webhook for Stopping
+resource "azurerm_automation_webhook" "use_garau" {
+  name                    = "use_garau_webhook"
+  resource_group_name     = azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.automation_account.name
+  expiry_time             = "2023-06-23T00:00:00Z"
+  enabled                 = true
+  runbook_name            = azurerm_automation_runbook.runbook.name
+  parameters              = {}
 }
 
 resource "azurerm_automation_credential" "fish_creds" {
-  name                    = "fishcraft-credentials"
+  name                    = "AzureCredential"
   resource_group_name     = azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.automation_account.name
   username                = var.paisa_bachau_username
