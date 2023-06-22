@@ -1,0 +1,7 @@
+# env file
+.env
+
+# terraform files and directories
+**/.tf*
+**/.terraform*
+**/terraform.*
