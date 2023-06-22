@@ -141,7 +141,7 @@ resource "azurerm_automation_runbook" "kunbook" {
 }
 
 # Webhook for Starting
-resource "azurerm_automation_webhook" "paisa_bachau" {
+resource "azurerm_automation_webhook" "paisa_bachaera_lyau" {
   name                    = "paisa_bachau_webhook"
   resource_group_name     = azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.automation_account.name
@@ -152,13 +152,13 @@ resource "azurerm_automation_webhook" "paisa_bachau" {
 }
 
 # Webhook for Stopping
-resource "azurerm_automation_webhook" "use_garau" {
+resource "azurerm_automation_webhook" "use_garaera_lyau" {
   name                    = "use_garau_webhook"
   resource_group_name     = azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.automation_account.name
   expiry_time             = "2023-06-23T00:00:00Z"
   enabled                 = true
-  runbook_name            = azurerm_automation_runbook.runbook.name
+  runbook_name            = azurerm_automation_runbook.kunbook.name
   parameters              = {}
 }
 
