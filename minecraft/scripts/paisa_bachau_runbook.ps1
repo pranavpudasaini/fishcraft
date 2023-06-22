@@ -4,7 +4,7 @@ param
   [object] $WebhookData
 )
 
-$CredentialAssetName = 'fishcraft-credentials'
+$CredentialAssetName = Get-Content -Path '.username'
 
 #Get the credential with the above name from the Automation Asset store
 $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
