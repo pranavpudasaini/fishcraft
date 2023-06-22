@@ -38,7 +38,7 @@ build:
 
 plan:
 	@echo "Planning Terraform"
-	cd $(TF_DIR); terraform plan -out=.tfplan
+	cd $(TF_DIR); terraform plan -out=.tfplan -var-file=.tfvars
 	@echo "Terraform Plan Complete"
 
 apply:
