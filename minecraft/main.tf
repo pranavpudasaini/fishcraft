@@ -4,6 +4,14 @@ resource "random_password" "minecraft_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
+resource "random_string" "random_prefix" {
+  length  = 6
+  lower   = true
+  numeric = true
+  special = false
+  upper   = false
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${var.scope}-resources"
   location = "Central India"
@@ -81,6 +89,32 @@ resource "azurerm_virtual_machine" "minecraft_server" {
       key_data = file("~/.ssh/id_rsa.pub")
     }
   }
+}
 
+resource "azurerm_storage_account" "main" {
+  name                     = "fishstorage${random_string.random_prefix.result}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_replication_type = "LRS"
+  account_tier             = "Standard"
+}
 
+resource "azurerm_service_plan" "plan" {
+  name                = "service-plan"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  os_type             = "Linux"
+  sku_name            = "Y1"
+}
+
+resource "azurerm_linux_function_app" "function" {
+  name                = "on-demand-fish-function"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  storage_account_name       = azurerm_storage_account.main.name
+  storage_account_access_key = azurerm_storage_account.main.primary_access_key
+  service_plan_id            = azurerm_service_plan.plan.id
+
+  site_config {}
 }
