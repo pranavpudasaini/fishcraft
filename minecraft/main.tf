@@ -1,24 +1,9 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=3.0.0"
-    }
-  }
-  required_version = "~>1.4.5"
-}
-
-provider "azurerm" {
-  features {}
-}
-
 resource "random_password" "minecraft_password" {
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-# Create a resource group
 resource "azurerm_resource_group" "rg" {
   name     = "${var.scope}-resources"
   location = "Central India"
