@@ -1,0 +1,1 @@
+@reboot sh -c "cd /home/minecraft && /usr/bin/java -Xmx2048M -Xms1024M -jar /home/minecraft/server.jar nogui"

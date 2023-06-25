@@ -48,7 +48,7 @@ apply:
 
 destroy:
 	@echo "Destroying Terraform"
-	cd $(TF_DIR); terraform destroy
+	cd $(TF_DIR); terraform destroy -var-file=.tfvars
 	@echo "Terraform Destroy Complete"
 
 clean:
