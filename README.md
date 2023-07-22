@@ -22,4 +22,15 @@ az cli --use-device-code
 ```
 
 
-4. From the root of the project, run `make deploy`
+4. To deploy the infrastructure
+
+
+```bash
+make deploy
+```
+
+5. To destroy the infrastructure
+
+```bash
+make destroy
+```
