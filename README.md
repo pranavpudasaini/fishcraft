@@ -12,7 +12,7 @@ git clone git@github.com:pranavpudasaini/fishcraft
 
 ```
 paisa_bachau_username = "YOUR_AZURE_AUTOMATION_USERNAME/ACCOUNT"
-and paisa_bachau_password = "YOUR_AZURE_AUTOMATION_PASSWORD/SECRET" 
+paisa_bachau_password = "YOUR_AZURE_AUTOMATION_PASSWORD/SECRET" 
 ```
 
 3. Setup and configure `azcli`
