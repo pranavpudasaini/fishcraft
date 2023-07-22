@@ -7,8 +7,10 @@ $(error Please set SCOPE)
 endif
 
 .PHONY: clean init format lint validate build
-all: clean init format lint validate build
-deploy: plan apply
+
+dry: clean init format lint validate build plan
+deploy: dry apply
+all: deploy
 
 init:
 	@echo "Initializing Terraform"
