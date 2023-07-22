@@ -6,8 +6,8 @@ ifndef TF_DIR
 $(error Please set SCOPE)
 endif
 
-.PHONY: clean chdir init format lint validate build
-all: clean chdir init format lint validate build
+.PHONY: clean init format lint validate build
+all: clean init format lint validate build
 deploy: plan apply
 
 init:
