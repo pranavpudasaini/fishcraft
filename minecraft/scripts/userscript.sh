@@ -8,20 +8,20 @@ sudo apt-get update -y
 sudo apt-get install openjdk-17-jre-headless -y
 
 # download minecraft
-curl https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar
+wget https://piston-data.mojang.com/v1/objects/84194a2f286ef7c14ed7ce0090dba59902951553/server.jar
 
 # cron job to start minecraft server on system startup
 echo @reboot sh -c "cd /home/minecraft && /usr/bin/java -Xmx2048M -Xms1024M -jar /home/minecraft/server.jar nogui" | sudo tee /var/spool/cron/crontabs/minecraft
 
 # accept EULA
-cat << EOF
+cat > /home/minecraft/eula.txt << EOF
 #By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).
 #Thu Jun 22 02:10:56 UTC 2023
 eula=TRUE
-EOF >> /home/minecraft/eula.txt
+EOF
 
 # minecraft server.properties
-cat << EOF
+cat > /home/minecraft/server.properties << EOF
 #Minecraft server properties
 #Sun Jun 25 02:56:51 UTC 2023
 enable-jmx-monitoring=false
@@ -80,4 +80,4 @@ enforce-whitelist=false
 spawn-protection=16
 resource-pack-sha1=
 max-world-size=29999984
-EOF > /home/minecraft/server.properties
+EOF
